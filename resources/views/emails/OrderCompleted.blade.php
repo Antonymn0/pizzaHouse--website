@@ -1,8 +1,8 @@
 
 
-<h1>  Your pizza order has been  proccesed </h1>
+<h2>  Your pizza order has been  proccesed </h2>
 
-<p> Dear Customer, <br/>
+<p> Dear Customer,  <br/>
      Your Pizza order has been successufuly processed
      and is currentlty being shipped to you. 
      Our delivery team will contact you when when delivered. <br/>  <br/>  <br/>
@@ -11,5 +11,5 @@ PizzaHouse Team.
 
 </p>
 
-<br/> <br/>
+<br/> <br/> <br/>
 <p class="pl-l ml-5"> <i> This is a system generated email. Do not reply to this email.</i> </p>

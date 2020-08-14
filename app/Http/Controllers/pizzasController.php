@@ -5,13 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 //use Illuminate\Support\Facades\Mail;
   //import  models
+use App\User;
 use App\Pizza;
 use App\Dropped_orders;  
 use App\Completed_orders; 
 use App\Mail\order_completed;
+use App\Mail\order_canceled;
 
 class pizzasController extends Controller
 {
+  public $user;
+  
+
     public function viewPizzas() {
         return view('pizzas');
       }
@@ -91,15 +96,17 @@ class pizzasController extends Controller
           // delete record from the pizzas table
           $pizza->delete();
           if(request('stamp') == 'Complete_order') {
-                // save record into completed orders table
+                  // save record into completed orders table
                 $completedPizza-> save();
-                
-                \Mail::to('ahmnk.uura@gmail.com')-> send(new order_completed);
+                  // send notification mail to user
+                \Mail::to('Ahmnk.uura@gmail.com')-> send(new order_completed);
              return redirect('/all_orders')-> with('success','Order completed successfuly!');    
            }
           if(request('stamp') == 'Drop_order') {
-                // save record into deleted pizzas table
+                     // save record into deleted pizzas table
                  $droppedPizza-> save();
+                      //send notification mail to user
+                 \Mail::to('Ahmnk.uura@gmail.com')-> send(new order_canceled);
               return redirect('/all_orders')-> with('error','Order deleted successfuly!');
                 }
          
