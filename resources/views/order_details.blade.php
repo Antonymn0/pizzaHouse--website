@@ -32,7 +32,7 @@
                 <div class="form-group">
                     <h4> Type </h4>
                     <i class="pl-2"> {{$pizzaDetails->type}} </i>
-                    <input type="hidden" name="type" value=" {{$pizzaDetails->type}} "}
+                    <input type="hidden" name="type" value=" {{$pizzaDetails->type}} ">
                 </div>
                 <div class=" ">
                     <h4> Size </h4>
@@ -46,14 +46,15 @@
                             @foreach ($pizzaDetails->toppings as $topping)
                                 @if ( $pizzaDetails->toppings)
                                     <li class="pl-2"> <i> {{$topping}} </i> </li>
-                                    <li> <input type="hidden" name="salad" value=" {{$topping}} "} </li>
+                                    <li> <input type="hidden" name="salad" value=" {{$topping}} "> </li>
                                 @else
                                     <li> None </li>
                                 @endif
                             @endforeach
                         </ul>
-                </div>
+                </div>     
             </div>
+            <input type="hidden" name="pagedID" value=" {{$pizzaDetails->pageId}}  ">
             <input type="submit" class="btn btn-lg btn-success text-center ml-5 mt-3 w-50" value="Checkout" name="submit">
         </div>
     </form>

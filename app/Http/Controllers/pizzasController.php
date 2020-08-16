@@ -40,6 +40,7 @@ class pizzasController extends Controller
               $pizza ->address =  request('address');
               $pizza->type =  request('type');
               $pizza->size =  request('size');
+              $pizza ->pageId = request('pageID');
             $pizza->toppings = [ 
               'salad' =>request('salad'),
               'bacon' =>request('bacon'),
@@ -47,6 +48,7 @@ class pizzasController extends Controller
               'cheese' =>request('cheese'),
             ];
       return view('order_details',['pizzaDetails' => $pizza]);
+     
     }
 
 
@@ -68,7 +70,7 @@ class pizzasController extends Controller
       public function storePizza(Request $request) {
           $this->validate($request,[
             //'toppings'=> 'required',
-            'size'=> 'required'
+            //'size'=> 'required'
                 ]);
           $pizza = new Pizza();  //create a new instance of the pizza model
               $pizza ->name =  request('name');
@@ -78,11 +80,16 @@ class pizzasController extends Controller
               $pizza->type =  request('type');
               $pizza->size =  request('size');
               $pizza->toppings = request('salad');
-                
             // save record to database
-          $pizza->save();              
-       return redirect('/createPizza')->with('success', 'Thankyou. Your order has been placed!'); 
+          $pizza->save();   
+          if (request('pageID')==='customPizza') {
+            return redirect()->action('EdamamAPIcontroller@fetchAPIdata')->with('success', 'Thankyou. Your order has been placed!') ;
+          } else {
+             return redirect('/createPizza')->with('success', 'Thankyou. Your order has been placed!'); 
+          }
+       
       }
+
       public function viewCompletedOrders(){
           //fetch data from the database
           $pizzaOrders = Completed_orders::all();
@@ -125,17 +132,17 @@ class pizzasController extends Controller
                 $completedPizza-> size = $pizza-> size;
                 $completedPizza-> toppings = $pizza-> toppings;
           // delete record from the pizzas table
-         // $pizza->delete();
-          if(request('stamp') == 'Complete_order') {
+          // $pizza->delete();
+            if(request('stamp') == 'Complete_order') {
                   // save record into completed orders table
-                $completedPizza-> save();
+                  $completedPizza-> save();
                   // send notification mail to user
-                \Mail::to('Ahmnk.uura@gmail.com')-> send(new order_completed);
-             return redirect('/all_orders')-> with('success','Order completed successfuly!');    
-           }
-          if(request('stamp') == 'Drop_order') {
-                     // save record into deleted pizzas table
-                 $droppedPizza-> save();
+                  \Mail::to('Ahmnk.uura@gmail.com')-> send(new order_completed);
+              return redirect('/all_orders')-> with('success','Order completed successfuly!');    
+               }
+            if(request('stamp') == 'Drop_order') {
+                      // save record into deleted pizzas table
+                  $droppedPizza-> save();
                       //send notification mail to user
                  \Mail::to('Ahmnk.uura@gmail.com')-> send(new order_canceled);
               return redirect('/all_orders')-> with('error','Order deleted successfuly!');

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Http;
 class EdamamAPIcontroller extends Controller
 {
 
-    //fetch data from edamam API
+    //funtion to fetch data from edamam API
     public function fetchAPIdata() {
         // register api keys
         $APP_ID = '3e4d633f';
@@ -19,3 +19,4 @@ class EdamamAPIcontroller extends Controller
         $data = HTTP::get("https://api.edamam.com/search?q=pizza&app_id=${APP_ID}&app_key=${APP_KEY}&from=2&to=10")->json();
          return view('custom_pizzas',['data' => $data['hits'] ]);
     }
+}

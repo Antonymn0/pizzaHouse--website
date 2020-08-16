@@ -94,3 +94,34 @@ footer{
 .complt-card{
     width: 30%;
 }
+
+
+
+
+
+ /* Style the buttons that are used to open and close the accordion panel */
+ .accordion {rgb(51, 42, 42);
+    color: #444;
+    cursor: pointer;
+    padding: 5px;
+    width: 100%;
+    text-align: center;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+  }
+  
+  /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+  .active, .accordion:hover {
+    background-color: #343a40;
+  }
+  
+  /* Style the accordion panel. Note: hidden by default */
+  .panel {
+    padding: 0 10px;
+    background-color: rgb(51, 42, 42);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    z-index: 10;
+  } 

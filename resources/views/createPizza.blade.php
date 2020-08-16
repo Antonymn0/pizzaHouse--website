@@ -30,6 +30,7 @@
             </div>
             <div class="justify-content-center row">
                 <p class="text-center m-auto p-2 w-100"> <strong> KSH </strong> 950 </p> <br />
+                <input type="hidden" name="pageID" value="createPizza">
                 <input type="submit" class="btn btn-m btn-success text-center w-50 pr-3 pl-3 mb-2 mt-3"
                     value="Place Order" name="submit">
             </div>
@@ -47,7 +48,7 @@
     </p>
     <form class="form mb-3  p-2 " method="POST" action="/custom_pizza">
         @csrf
-        <input type="hidden" value="pizza" name="customPizza">
+        <input type="hidden" value="pageId" name="createPizza">
         <input type="submit" class="btn btn-dark btn-m w-50 " value="Create custom pizza!">
     </form>
 </div>
