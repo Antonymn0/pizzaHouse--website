@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
   //import  models
 use App\User;
 use App\Pizza;
+use App\Popular_Pizza;
 use App\Dropped_orders;  
 use App\Completed_orders; 
 use App\Mail\order_completed;
@@ -29,28 +30,56 @@ class pizzasController extends Controller
             'pizzaOrders' => $pizzaOrders,
             ])->with('success', 'Order completed');
     }
+
+
+    public function orderDetails() {
+      $pizza = new Pizza();  //create a new instance of the pizza model
+              $pizza ->name =  request('name');
+              $pizza ->email =  request('email');
+              $pizza ->phone =  request('phone');
+              $pizza ->address =  request('address');
+              $pizza->type =  request('type');
+              $pizza->size =  request('size');
+            $pizza->toppings = [ 
+              'salad' =>request('salad'),
+              'bacon' =>request('bacon'),
+              'mushroom' =>request('mushroom'),
+              'cheese' =>request('cheese'),
+            ];
+      return view('order_details',['pizzaDetails' => $pizza]);
+    }
+
+
+
     public function completePizzaOrder() {
 
         return view('pizzas'); 
       }
+
+
+      // fetch popular pizzas and display them to the customer
       public function createPizzaOrder() {
-           return view('/createPizza'); 
+          $popularPizzas = Popular_Pizza::all();
+          return view('/createPizza',[
+                            'popularPizzas' => $popularPizzas,
+                            ]); 
       }
 
       public function storePizza(Request $request) {
           $this->validate($request,[
-            'toppings'=> 'required',
+            //'toppings'=> 'required',
             'size'=> 'required'
                 ]);
           $pizza = new Pizza();  //create a new instance of the pizza model
-          $pizza ->name =  request('name');
-          $pizza ->email =  request('email');
-          $pizza ->phone =  request('phone');
-          $pizza ->address =  request('address');
-          $pizza->type =  request('type');
-          $pizza->size =  request('size');
-          $pizza->toppings =  request('toppings');
-            // save record
+              $pizza ->name =  request('name');
+              $pizza ->email =  request('email');
+              $pizza ->phone =  request('phone');
+              $pizza ->address =  request('address');
+              $pizza->type =  request('type');
+              $pizza->size =  request('size');
+              $pizza->toppings = request('salad');
+                
+            // save record to database
           $pizza->save();              
        return redirect('/createPizza')->with('success', 'Thankyou. Your order has been placed!'); 
       }
@@ -63,6 +92,8 @@ class pizzasController extends Controller
               'title' => $title='Completed orders',
                  ]);
       }
+
+
       public function deleted_orders(){
         //fetch data from the database
         $pizzaOrders = Dropped_orders::all();
@@ -94,7 +125,7 @@ class pizzasController extends Controller
                 $completedPizza-> size = $pizza-> size;
                 $completedPizza-> toppings = $pizza-> toppings;
           // delete record from the pizzas table
-          $pizza->delete();
+         // $pizza->delete();
           if(request('stamp') == 'Complete_order') {
                   // save record into completed orders table
                 $completedPizza-> save();

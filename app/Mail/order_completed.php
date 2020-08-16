@@ -13,6 +13,7 @@ class order_completed extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
+    public $pizza;
 
     /**
      * Create a new message instance.
@@ -31,7 +32,7 @@ class order_completed extends Mailable
      *
      * @return $this
      */
-    public function build()
+    public function build( )
     {
         return $this->view('emails.OrderCompleted');
     }

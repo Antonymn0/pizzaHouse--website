@@ -19,7 +19,7 @@ class CreateDroppedOrdersTable extends Migration
             $table-> string('name');
             $table-> string('type');
             $table-> string('size');
-            $table-> string('toppings');
+            $table-> string('toppings')-> nullable();;
             $table-> string('email');
             $table-> string('phone');
             $table-> string('address');
